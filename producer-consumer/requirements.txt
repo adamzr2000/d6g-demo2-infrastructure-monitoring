@@ -1,0 +1,3 @@
+confluent-kafka==1.7.0
+ping3
+influxdb-client
