@@ -96,12 +96,12 @@ services:
     networks:
       - infrastructure-monitoring
 
-  influxdb:
+  influxdb2:
     image: influxdb:2
-    container_name: influxdb
+    container_name: influxdb2
     restart: always
     ports:
-      - "8086:8086"
+      - "8088:8086"
     environment:
       DOCKER_INFLUXDB_INIT_MODE: "setup"
       DOCKER_INFLUXDB_INIT_USERNAME: "desire6g"
@@ -113,20 +113,20 @@ services:
     networks:
       - infrastructure-monitoring
 
-  grafana:
-    image: grafana/grafana:latest
-    container_name: grafana
-    restart: always
-    ports:
-      - "3000:3000"
-    environment:
-      GF_SECURITY_ADMIN_USER: "desire6g"
-      GF_SECURITY_ADMIN_PASSWORD: "desire6g2024;"
-    volumes:
-      - ./grafana_config/datasources:/etc/grafana/provisioning/datasources 
-      - ./grafana_config/dashboards:/etc/grafana/provisioning/dashboards 
-    networks:
-      - infrastructure-monitoring
+  # grafana:
+  #   image: grafana/grafana:latest
+  #   container_name: grafana-dashboard
+  #   restart: always
+  #   ports:
+  #     - "3001:3000"
+  #   environment:
+  #     GF_SECURITY_ADMIN_USER: "desire6g"
+  #     GF_SECURITY_ADMIN_PASSWORD: "desire6g2024;"
+  #   volumes:
+  #     - ./grafana_config/datasources:/etc/grafana/provisioning/datasources 
+  #     - ./grafana_config/dashboards:/etc/grafana/provisioning/dashboards 
+  #   networks:
+  #     - infrastructure-monitoring
 
 networks:
   infrastructure-monitoring:

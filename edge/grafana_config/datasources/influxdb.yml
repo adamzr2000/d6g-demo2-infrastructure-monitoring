@@ -6,7 +6,7 @@ datasources:
   type: influxdb
   access: proxy
   orgId: 1
-  url: http://influxdb:8086
+  url: http://influxdb2:8086
   jsonData:
     defaultBucket: "infrastructure-monitoring"
     organization: "desire6g"

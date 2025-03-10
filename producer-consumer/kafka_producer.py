@@ -31,8 +31,7 @@ except Exception as e:
 # Ping Targets with Named Keys
 ping_targets = {
     "google-dns": "8.8.8.8",
-    "cloudflare-dns": "1.1.1.1",
-    "quad9-dns": "9.9.9.9"
+    "cloudflare-dns": "1.1.1.1"
 }
 
 # Store ping results per target

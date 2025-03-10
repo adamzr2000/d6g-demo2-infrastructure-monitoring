@@ -1,63 +1,69 @@
-# Kafka-docker-mm2
-This is an example of synchronization/exporting of distriuted Kafka environemnt exploiting MirrorMaker2.
+# Kafka-Docker-MM2
 
-The deployment uses MirrorMaker2 to syncronize information from one cluster to another one. The MM2 istance is a same Kafka broker image but with a different entrypoint. The relative configuration file is _mm2.properties_.
-This example is based on the following guide, [Medium article](https://medium.com/larus-team/how-to-setup-mirrormaker-2-0-on-apache-kafka-multi-cluster-environment-87712d7997a4) but with a different base image of Kafka (bitami vs confluent).
+This repository provides an example of synchronizing a distributed Kafka environment using MirrorMaker 2 (MM2). The deployment leverages MM2 to replicate data between Kafka clusters. MM2 runs as a standard Kafka broker with a modified entrypoint configured via `mm2.properties`.
 
-This version is based on the new standalone Kafka with RAFT, plus Kafka-UI.
+This setup uses Kafka with RAFT and includes Kafka-UI for monitoring. It is based on Bitnami Kafka instead of Confluent Kafka and follows the approach outlined in [this guide](https://medium.com/larus-team/how-to-setup-mirrormaker-2-0-on-apache-kafka-multi-cluster-environment-87712d7997a4) with modifications.
 
-# Code structure
-3 folders are provided:
-- cloud: files for the control of the cloud DC kafka instance
-- edge: files for the control of an edge D6G kafka instance
-- producer-consumer: example of consumer and producers based on python
+## Project Structure
+- `edge/` - Scripts for managing the Kafka instance at the edge (D6G site).
+- `producer-consumer/` - Example Python-based Kafka producers and consumers.
 
-# Cloud DC commands
-Run:
+## Quick Start
 
+### Start the Edge Kafka Instance
 ```bash
-./start_cloud.sh --local-ip <ip-addr>
+cd edge
+./start_edge.sh --local-ip 10.5.1.21
 ```
 
-Stop:
+### Start Infrastructure Monitoring
 ```bash
-./stop_cloud.sh
+./start_infrastructure_monitoring.sh
+```
+- Kafka UI: [http://10.5.1.21:8080](http://10.5.1.21:8080/)
+- Grafana Dashboard: [http://10.5.1.21:3000](http://10.5.1.21:3000/)
+
+![grafana](./grafana-dashboard.png)
+
+
+### Stop Infrastructure Monitoring
+```bash
+./stop_infrastructure_monitoring.sh
 ```
 
-# Edge site commands
-Run:
+### Stop the Edge Kafka Instance
 ```bash
-./start_edge.sh --local-ip <ip-addr>
-```
-Kafka UI at [http://127.0.0.1:8080/](http://127.0.0.1:8080/)
-
-Stop:
-```bash
+cd edge
 ./stop_edge.sh
 ```
 
-# Producer commands
-Run:
-```bash
-python3 kafka_producer.py --file config/configP1.conf
-```
+## Utility Commands
 
-# Consumer commands
-Run:
-```bash
-python3 kafka_consumer.py --file config/configC1.conf
-```
+### Edge Site Control
+- Start Kafka Edge:
+  ```bash
+  ./start_edge.sh --local-ip 10.5.1.21
+  ```
+- Stop Kafka Edge:
+  ```bash
+  ./stop_edge.sh
+  ```
 
-or
+### Producer Commands
+- Start a Kafka Producer:
+  ```bash
+  python3 kafka_producer.py --file config/configP1.conf
+  ```
 
-```bash
-./run_kafka_agent.sh --script kafka_consumer.py --file-name configC1.conf
-```
+### Consumer Commands
+- Start a Kafka Consumer:
+  ```bash
+  python3 kafka_consumer.py --file configC1.conf
+  ```
 
-# InfluxDB - Grafana integration
-Run:
-```bash
-./run_kafka_agent.sh --script kafka_to_influx.py --file-name configCInfluxDB.conf
-```
+### InfluxDB Integration
+- Send Kafka Data to InfluxDB:
+  ```bash
+  python3 kafka_to_influx.py --file configCInfluxDB.conf
+  ```
 
-Kafka UI at [http://127.0.0.1:3000/](http://127.0.0.1:3000/)

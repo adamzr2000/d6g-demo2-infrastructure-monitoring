@@ -13,7 +13,7 @@ CONTAINER_NAME="${SCRIPT_NAME%.py}"  # Remove .py extension for container name
 
 echo "Running Kafka Agent: $SCRIPT_NAME with config: $CONFIG_FILE in container: $CONTAINER_NAME"
 
-docker run -it --rm \
+docker run -d --rm \
     --name "$CONTAINER_NAME" \
     --net host \
     -v "./config:/app/config" \
