@@ -8,7 +8,7 @@ This setup uses Kafka with RAFT and includes Kafka-UI for monitoring. It is base
 - `edge/` - Scripts for managing the Kafka instance at the edge (D6G site).
 - `producer-consumer/` - Example Python-based Kafka producers and consumers.
 
-## Quick Start
+## Quick Start (5TONIC server)
 
 ### Start the Edge Kafka Instance
 ```bash
@@ -42,7 +42,7 @@ cd edge
 ### Edge Site Control
 - Start Kafka Edge:
   ```bash
-  ./start_edge.sh --local-ip 10.5.1.21
+  ./start_edge.sh --local-ip <your-ip-address>
   ```
 - Stop Kafka Edge:
   ```bash
@@ -54,16 +54,18 @@ cd edge
   ```bash
   python3 kafka_producer.py --file config/configP1.conf
   ```
+> Note: In the config file, replace `kafkaIP` with your IP address
 
 ### Consumer Commands
 - Start a Kafka Consumer:
   ```bash
-  python3 kafka_consumer.py --file configC1.conf
+  python3 kafka_consumer.py --file config/configC1.conf
   ```
+> Note: In the config file, replace `kafkaIP` with your IP address
 
 ### InfluxDB Integration
 - Send Kafka Data to InfluxDB:
   ```bash
-  python3 kafka_to_influx.py --file configCInfluxDB.conf
+  python3 kafka_to_influx.py --file config/configCInfluxDB.conf
   ```
-
+> Note: In the config file, replace `kafkaIP` with your IP address
