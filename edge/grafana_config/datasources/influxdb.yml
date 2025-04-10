@@ -15,3 +15,15 @@ datasources:
     token: "desire6g2024;"
   isDefault: true
   editable: true
+
+# - name: InfluxDB-traffic-management
+#   type: influxdb
+#   access: proxy
+#   orgId: 1
+#   url: http://10.5.1.21:8086
+#   database: desire6g_demo
+#   user: admin
+#   secureJsonData:
+#     password: admin
+#   isDefault: false
+#   editable: true

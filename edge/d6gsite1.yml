@@ -76,6 +76,7 @@ services:
     container_name: mirror-maker
     volumes:
       - ./mm2_config:/tmp/kafka/config
+    restart: always
     depends_on:
       - broker1A
       - broker2A
@@ -96,7 +97,7 @@ services:
     networks:
       - infrastructure-monitoring
 
-  influxdb2:
+  influxdb:
     image: influxdb:2
     container_name: influxdb2
     restart: always
@@ -113,20 +114,20 @@ services:
     networks:
       - infrastructure-monitoring
 
-  # grafana:
-  #   image: grafana/grafana:latest
-  #   container_name: grafana-dashboard
-  #   restart: always
-  #   ports:
-  #     - "3001:3000"
-  #   environment:
-  #     GF_SECURITY_ADMIN_USER: "desire6g"
-  #     GF_SECURITY_ADMIN_PASSWORD: "desire6g2024;"
-  #   volumes:
-  #     - ./grafana_config/datasources:/etc/grafana/provisioning/datasources 
-  #     - ./grafana_config/dashboards:/etc/grafana/provisioning/dashboards 
-  #   networks:
-  #     - infrastructure-monitoring
+  grafana:
+    image: grafana/grafana:11.5.2
+    container_name: grafana2
+    restart: always
+    ports:
+      - "3003:3000"
+    environment:
+      GF_SECURITY_ADMIN_USER: "desire6g"
+      GF_SECURITY_ADMIN_PASSWORD: "desire6g2024;"
+    volumes:
+      - ./grafana_config/datasources:/etc/grafana/provisioning/datasources 
+      - ./grafana_config/dashboards:/etc/grafana/provisioning/dashboards 
+    networks:
+      - infrastructure-monitoring
 
 networks:
   infrastructure-monitoring:

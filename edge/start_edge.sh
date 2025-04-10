@@ -35,4 +35,4 @@ echo "Using Local IP: $ip"
 echo "LOCAL_IP=${ip}" > "$filename"
 
 # Start Docker Compose with the specified YAML file
-sudo docker compose -f d6gsite1.yml up -d
+docker compose -f d6gsite1.yml up -d

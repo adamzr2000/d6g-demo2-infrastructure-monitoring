@@ -4,6 +4,7 @@ import argparse
 from configparser import ConfigParser
 from confluent_kafka import Consumer, KafkaException
 from influxdb_client import InfluxDBClient, WriteOptions, Point
+from influxdb_client.client.write_api import ASYNCHRONOUS
 
 # Configure Logging with timestamps
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
@@ -17,8 +18,6 @@ args = parser.parse_args()
 # Load Configuration File
 config = ConfigParser()
 config.read(args.file)
-
-BATCH_SIZE = 1
 
 # Read Kafka Configurations from File
 try:
@@ -59,7 +58,7 @@ except Exception as e:
 # Initialize InfluxDB Client
 try:
     influx_client = InfluxDBClient(url=influxdb_url, token=influxdb_token, org=influxdb_org)
-    write_api = influx_client.write_api(write_options=WriteOptions(batch_size=10, flush_interval=5000))
+    write_api = influx_client.write_api(write_options=WriteOptions(batch_size=100, flush_interval=2000, write_type=ASYNCHRONOUS))
     log.info(f"Successfully connected to InfluxDB at {influxdb_url}")
 except Exception as e:
     log.error(f"Error connecting to InfluxDB: {e}")
@@ -67,7 +66,6 @@ except Exception as e:
 
 # Function to Consume Kafka Messages and Write to InfluxDB
 def consume_messages():
-    batch = []
     try:
         log.info("Starting Kafka message consumption...")
         while True:
@@ -75,6 +73,9 @@ def consume_messages():
 
             if msg is None:
                 continue
+
+            batch = []
+            
             if msg.error():
                 log.warning(f"Kafka message error: {msg.error()}")
                 continue
@@ -84,46 +85,98 @@ def consume_messages():
                 data = json.loads(msg.value().decode("utf-8"))
                 site_id = data.get("site_id", "unknown")
 
-                # ✅ Process System Metrics
+                # SYSTEM METRICS
                 if "system_metrics" in data:
-                    system_metrics = data["system_metrics"]
+                    sm = data["system_metrics"]
                     point = (
                         Point("system_metrics")
                         .tag("site_id", site_id)
-                        .field("cpu_usage_percent", system_metrics.get("cpu_usage_percent", 0))
-                        .field("ram_usage_percent", system_metrics.get("ram_usage_percent", 0))
-                        .field("total_ram_gb", system_metrics.get("total_ram_gb", 0))
-                        .field("free_ram_gb", system_metrics.get("free_ram_gb", 0))
+                        .tag("hostname", sm.get("hostname", "unknown"))
+                        .field("uptime_seconds", sm.get("uptime_seconds", 0))
+                        
+                        # CPU
+                        .field("cpu_usage_percent", sm.get("cpu_usage_percent", 0))
+                        .field("cpu_logical_cores", sm.get("cpu_logical_cores", 0))
+                        .field("cpu_physical_cores", sm.get("cpu_physical_cores", 0))
+                        .field("cpu_user_percent", sm.get("cpu_user_percent", 0))
+                        .field("cpu_system_percent", sm.get("cpu_system_percent", 0))
+                        .field("cpu_idle_percent", sm.get("cpu_idle_percent", 0))
+                        .field("cpu_iowait_percent", sm.get("cpu_iowait_percent", 0))
+                        .field("cpu_irqs_percent", sm.get("cpu_irqs_percent", 0))
+
+                        # RAM
+                        .field("ram_usage_percent", sm.get("ram_usage_percent", 0))
+                        .field("ram_total_bytes", sm.get("ram_total_bytes", 0))
+                        .field("ram_used_bytes", sm.get("ram_used_bytes", 0))
+                        .field("ram_free_bytes", sm.get("ram_free_bytes", 0))
+                        .field("ram_reclaimable_bytes", sm.get("ram_reclaimable_bytes", 0))
+
+                        # SWAP
+                        .field("swap_usage_percent", sm.get("swap_usage_percent", 0))
+                        .field("swap_total_bytes", sm.get("swap_total_bytes", 0))
+                        .field("swap_used_bytes", sm.get("swap_used_bytes", 0))
+                        .field("swap_free_bytes", sm.get("swap_free_bytes", 0))
                     )
                     batch.append(point)
 
-                # ✅ Process Network Metrics
-                if "network_metrics" in data:
-                    for target_name, network in data["network_metrics"].items():
+                # PING METRICS
+                if "ping_metrics" in data:
+                    for target_name, ping_info in data["ping_metrics"].items():
                         point = (
-                            Point("network_metrics")
+                            Point("ping_metrics")
                             .tag("site_id", site_id)
                             .tag("target_name", target_name)
-                            .tag("target_ip", network.get("ip", "unknown"))
-                            .field("latency_ms", network.get("latency_ms", 0))
-                            .field("packet_loss_percent", network.get("packet_loss_percent", 0))
-                            .field("total_pings", network.get("total_pings", 0))
-                            .field("successful_pings", network.get("successful_pings", 0))
-                            .field("failed_pings", network.get("failed_pings", 0))
+                            .tag("target_ip", ping_info.get("ip", "unknown"))
+                            .field("latency_ms", ping_info.get("latency_ms", 0))
+                            .field("packet_loss_percent", ping_info.get("packet_loss_percent", 0))
+                            .field("total_pings", ping_info.get("total_pings", 0))
+                            .field("successful_pings", ping_info.get("successful_pings", 0))
+                            .field("failed_pings", ping_info.get("failed_pings", 0))
+                        )
+                        batch.append(point)
+                
+                # DOCKER METRICS
+                if "docker_metrics" in data:
+                    docker_data = data["docker_metrics"]
+                    container_count = docker_data.get("docker_container_count", None)
+                    if container_count is not None:
+                        point = (
+                            Point("docker_metrics_summary")
+                            .tag("site_id", site_id)
+                            .field("docker_container_count", container_count)
                         )
                         batch.append(point)
 
-                # ✅ Batch write to InfluxDB
+                    containers = docker_data.get("containers", [])
+                    for container in containers:
+                        point = (
+                            Point("docker_metrics")
+                            .tag("site_id", site_id)
+                            .tag("container_name", container.get("name", "unknown"))
+                            .field("cpu_usage_percent", container.get("cpu_usage_percent", 0))
+                            .field("ram_usage_bytes", container.get("ram_usage_bytes", 0))
+                            .field("net_rx_bytes", container.get("net_rx_bytes", 0))
+                            .field("net_tx_bytes", container.get("net_tx_bytes", 0))
+                        )
+                        batch.append(point)
+
+                # Write batch to InfluxDB
                 if batch:
                     write_api.write(bucket=influxdb_bucket, org=influxdb_org, record=batch)
-                    log.info(f"✅ Successfully wrote {len(batch)} records to InfluxDB.")
+                    log.info(
+                        f"[INFLUX WRITE] site_id={site_id} | "
+                        f"system_metrics={'system_metrics' in data} | "
+                        f"ping_metrics={len(data.get('ping_metrics', {}))} targets | "
+                        f"containers={len(data.get('docker_metrics', {}).get('containers', []))} | "
+                        f"points={len(batch)}"
+                    )
                     batch.clear()
 
             except json.JSONDecodeError as e:
                 log.error(f"JSON parsing error: {e} - Raw Message: {msg.value()}")
 
     except KeyboardInterrupt:
-        log.info("🔴 Stopping Kafka consumer due to KeyboardInterrupt...")
+        log.info("Stopping Kafka consumer due to KeyboardInterrupt...")
     finally:
         log.info("Closing Kafka consumer and InfluxDB connection.")
         consumer.close()

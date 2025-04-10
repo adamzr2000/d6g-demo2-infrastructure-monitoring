@@ -1,6 +1,34 @@
 #!/bin/bash
 
+# Check for --local-ip argument
+if [[ "$1" != "--local-ip" || -z "$2" ]]; then
+    echo "Usage: $0 --local-ip <IP_ADDRESS>"
+    exit 1
+fi
+
+LOCAL_IP=$2
+
 echo "Starting infrastructure monitoring..."
+
+# Call start_edge.sh with IP
+echo "Starting edge stack with IP: $LOCAL_IP"
+EDGE_SCRIPT_DIR="$(dirname "$0")/edge"
+cd "$EDGE_SCRIPT_DIR" || { echo "Failed to enter $EDGE_SCRIPT_DIR. Exiting."; exit 1; }
+./start_edge.sh --local-ip "$LOCAL_IP"
+
+# Sleep to allow edge stack to initialize
+echo "Waiting 10 seconds for edge services to initialize..."
+sleep 10
+
+cd ..  # Go back to root project directory
+
+# Overwrite kafkaIP in config files
+CONFIG_DIR="$(dirname "$0")/producer-consumer/config"
+echo "Updating kafkaIP and influxdb_url in all config files to: $LOCAL_IP"
+for file in "$CONFIG_DIR"/*.conf; do
+    sed -i "s/^kafkaIP = .*/kafkaIP = ${LOCAL_IP}/" "$file"
+    sed -i "s|^influxdb_url = .*|influxdb_url = http://${LOCAL_IP}:8088|" "$file"
+done
 
 # Navigate to the producer-consumer directory
 SCRIPT_DIR="$(dirname "$0")/producer-consumer"

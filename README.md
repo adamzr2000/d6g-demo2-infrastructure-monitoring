@@ -8,34 +8,29 @@ This setup uses Kafka with RAFT and includes Kafka-UI for monitoring. It is base
 - `edge/` - Scripts for managing the Kafka instance at the edge (D6G site).
 - `producer-consumer/` - Example Python-based Kafka producers and consumers.
 
-## Quick Start (5TONIC server)
+## Quick Start
 
-### Start the Edge Kafka Instance
+### Start Infrastructure Monitoring with Edge Kafka instance
 ```bash
 cd edge
-./start_edge.sh --local-ip 10.5.1.21
+./start_infrastructure_monitoring.sh --local-ip 10.5.1.21
 ```
 
-### Start Infrastructure Monitoring
-```bash
-./start_infrastructure_monitoring.sh
-```
-- Kafka UI: [http://10.5.1.21:8080](http://10.5.1.21:8080/)
-- Grafana Dashboard: [http://10.5.1.21:3000](http://10.5.1.21:3000/)
-
-![grafana](./grafana-dashboard.png)
-
+- Kafka UI: [http://10.5.1.21:8080](http://loca10.5.1.21lhost:8080/)
+- Grafana Dashboard: [http://10.5.1.21:3003](http://10.5.1.21:3003/)
+- InfluxDB UI: [http://10.5.1.21:8088](http://10.5.1.21:8088/)
 
 ### Stop Infrastructure Monitoring
 ```bash
-./stop_infrastructure_monitoring.sh
+./start_infrastructure_monitoring.sh
 ```
 
-### Stop the Edge Kafka Instance
-```bash
-cd edge
-./stop_edge.sh
-```
+---
+
+![grafana1](./grafana-dashboard1.png)
+![grafana2](./grafana-dashboard2.png)
+
+---
 
 ## Utility Commands
 

@@ -1,0 +1,2907 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": 2,
+  "iteration": 1744299703726,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "aliasColors": {
+        "Gold": "#ffd700",
+        "Silver": "#c0c0c0"
+      },
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "fieldConfig": {
+        "defaults": {
+          "links": []
+        },
+        "overrides": []
+      },
+      "fill": 0,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 10,
+        "w": 12,
+        "x": 0,
+        "y": 0
+      },
+      "hiddenSeries": false,
+      "id": 39,
+      "legend": {
+        "alignAsTable": false,
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "rightSide": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 3,
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "8.3.2",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [
+        {
+          "$$hashKey": "object:53",
+          "alias": "/Gold/",
+          "color": "#ffd700",
+          "legend": false,
+          "linewidth": 1
+        },
+        {
+          "$$hashKey": "object:54",
+          "alias": "/Silver/",
+          "color": "#c0c0c0",
+          "legend": false,
+          "linewidth": 1
+        },
+        {
+          "$$hashKey": "object:67",
+          "alias": "/cubic/",
+          "color": "#96D98D",
+          "legend": false,
+          "linewidth": 1
+        },
+        {
+          "$$hashKey": "object:102",
+          "alias": "/udp/",
+          "color": "#5794F2",
+          "linewidth": 2
+        },
+        {
+          "$$hashKey": "object:235",
+          "alias": "/Gold /",
+          "legend": true
+        },
+        {
+          "$$hashKey": "object:273",
+          "alias": "/Silver /",
+          "legend": true
+        },
+        {
+          "$$hashKey": "object:292",
+          "alias": "/cubic_6000_30000/",
+          "legend": true
+        }
+      ],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "alias": "Gold_hide",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "C-6l5xDnk"
+          },
+          "groupBy": [
+            {
+              "params": [
+                "flow_id"
+              ],
+              "type": "tag"
+            }
+          ],
+          "hide": false,
+          "measurement": "udpStats",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT \"value\"  *8 FROM \"udpStats\" WHERE (\"port_id\" >= ${gold_portrange_min} AND flow_id<>'20000' AND \"port_id\" < ${gold_portrange_min}+${flowcount}) AND $timeFilter GROUP BY \"flow_id\"",
+          "rawQuery": true,
+          "refId": "D",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [
+                  " *8"
+                ],
+                "type": "math"
+              }
+            ]
+          ],
+          "tags": []
+        },
+        {
+          "alias": "Gold ",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "C-6l5xDnk"
+          },
+          "groupBy": [
+            {
+              "params": [
+                "flow_id"
+              ],
+              "type": "tag"
+            }
+          ],
+          "hide": false,
+          "measurement": "udpStats",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT \"value\"  *8 FROM \"udpStats\" WHERE (\"port_id\" >= ${gold_portrange_min} AND flow_id='20000' AND \"port_id\" < ${gold_portrange_min}+${flowcount}) AND $timeFilter GROUP BY \"flow_id\"",
+          "rawQuery": true,
+          "refId": "B",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [
+                  " *8"
+                ],
+                "type": "math"
+              }
+            ]
+          ],
+          "tags": []
+        },
+        {
+          "alias": "Silver_hide",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "C-6l5xDnk"
+          },
+          "groupBy": [
+            {
+              "params": [
+                "flow_id"
+              ],
+              "type": "tag"
+            }
+          ],
+          "hide": false,
+          "measurement": "udpStats",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT \"value\"  *8 FROM \"udpStats\" WHERE (\"port_id\" >= ${silver_portrange_min} AND flow_id<>'22000'  AND \"port_id\" < ${silver_portrange_min}+${flowcount}) AND $timeFilter GROUP BY \"flow_id\"",
+          "rawQuery": true,
+          "refId": "C",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [
+                  " *8"
+                ],
+                "type": "math"
+              }
+            ]
+          ],
+          "tags": []
+        },
+        {
+          "alias": "Silver ",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "C-6l5xDnk"
+          },
+          "groupBy": [
+            {
+              "params": [
+                "flow_id"
+              ],
+              "type": "tag"
+            }
+          ],
+          "hide": false,
+          "measurement": "udpStats",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT \"value\"  *8 FROM \"udpStats\" WHERE (\"port_id\" >= ${silver_portrange_min} AND flow_id='22000'  AND \"port_id\" < ${silver_portrange_min}+${flowcount}) AND $timeFilter GROUP BY \"flow_id\"",
+          "rawQuery": true,
+          "refId": "E",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [
+                  " *8"
+                ],
+                "type": "math"
+              }
+            ]
+          ],
+          "tags": []
+        },
+        {
+          "alias": "$tag_flow_id",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "C-6l5xDnk"
+          },
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT \"thr\" FROM \"thr_pp\" WHERE $timeFilter GROUP BY \"flow_id\"",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "thresholds": [],
+      "timeRegions": [],
+      "title": "Per flow throughput(First N flow)",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "mode": "time",
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:144",
+          "format": "bps",
+          "label": "Mbps",
+          "logBase": 1,
+          "show": true
+        },
+        {
+          "$$hashKey": "object:145",
+          "format": "short",
+          "logBase": 1,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "fieldConfig": {
+        "defaults": {
+          "links": []
+        },
+        "overrides": []
+      },
+      "fill": 0,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 10,
+        "w": 12,
+        "x": 12,
+        "y": 0
+      },
+      "hiddenSeries": false,
+      "id": 37,
+      "legend": {
+        "alignAsTable": false,
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "rightSide": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 3,
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "8.3.2",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [
+        {
+          "$$hashKey": "object:53",
+          "alias": "/Gold/",
+          "color": "#ffd700"
+        },
+        {
+          "$$hashKey": "object:54",
+          "alias": "/Silver/",
+          "color": "#c0c0c0"
+        },
+        {
+          "$$hashKey": "object:67",
+          "alias": "/Max/",
+          "dashes": true,
+          "linewidth": 1
+        },
+        {
+          "$$hashKey": "object:102",
+          "alias": "/Min/",
+          "dashes": true,
+          "linewidth": 1
+        }
+      ],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "alias": "$tag_flow_id",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "C-6l5xDnk"
+          },
+          "groupBy": [
+            {
+              "params": [
+                "flow_id"
+              ],
+              "type": "tag"
+            }
+          ],
+          "hide": true,
+          "measurement": "udpStats",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT \"value\" FROM \"timeseries_thr\" WHERE $timeFilter GROUP BY \"flow_id\"",
+          "rawQuery": false,
+          "refId": "D",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [
+                  " *8"
+                ],
+                "type": "math"
+              }
+            ]
+          ],
+          "tags": []
+        },
+        {
+          "alias": "",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "C-6l5xDnk"
+          },
+          "groupBy": [
+            {
+              "params": [
+                "1s"
+              ],
+              "type": "time"
+            }
+          ],
+          "hide": false,
+          "measurement": "udpStats",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT max(\"value\") *8 as \"Gold Max\", mean(\"value\") *8 as \"Gold Avg\", min(\"value\") *8 as \"Gold Min\" FROM \"udpStats\" WHERE (\"port_id\" >= ${gold_portrange_min} AND \"port_id\" <= ${gold_portrange_max}) AND $timeFilter GROUP BY time(1s)",
+          "rawQuery": true,
+          "refId": "B",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "max"
+              },
+              {
+                "params": [
+                  "*8"
+                ],
+                "type": "math"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "port_id",
+              "operator": ">",
+              "value": "${portrange_min}"
+            },
+            {
+              "condition": "AND",
+              "key": "port_id",
+              "operator": "<",
+              "value": "${portrange_max}"
+            }
+          ]
+        },
+        {
+          "alias": "Gold Avg",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "C-6l5xDnk"
+          },
+          "groupBy": [
+            {
+              "params": [
+                "1s"
+              ],
+              "type": "time"
+            }
+          ],
+          "hide": true,
+          "measurement": "udpStats",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT mean(\"value\") *8 FROM \"udpStats\" WHERE (\"port_id\" >= ${gold_portrange_min} AND \"port_id\" < ${gold_portrange_max}) AND $timeFilter GROUP BY time(1s)",
+          "rawQuery": true,
+          "refId": "E",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              },
+              {
+                "params": [
+                  "*8"
+                ],
+                "type": "math"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "port_id",
+              "operator": ">",
+              "value": "${portrange_min}"
+            },
+            {
+              "condition": "AND",
+              "key": "port_id",
+              "operator": "<",
+              "value": "${portrange_max}"
+            }
+          ]
+        },
+        {
+          "alias": "Gold Min",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "C-6l5xDnk"
+          },
+          "groupBy": [
+            {
+              "params": [
+                "1s"
+              ],
+              "type": "time"
+            }
+          ],
+          "hide": true,
+          "measurement": "udpStats",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT min(\"value\") *8 FROM \"udpStats\" WHERE (\"port_id\" >= ${gold_portrange_min} AND \"port_id\" <= ${gold_portrange_max}) AND $timeFilter GROUP BY time(1s)",
+          "rawQuery": true,
+          "refId": "C",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "min"
+              },
+              {
+                "params": [
+                  "*8"
+                ],
+                "type": "math"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "port_id",
+              "operator": ">",
+              "value": "${portrange_min}"
+            },
+            {
+              "condition": "AND",
+              "key": "port_id",
+              "operator": "<",
+              "value": "${portrange_max}"
+            }
+          ]
+        },
+        {
+          "alias": "",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "C-6l5xDnk"
+          },
+          "groupBy": [
+            {
+              "params": [
+                "1s"
+              ],
+              "type": "time"
+            }
+          ],
+          "hide": false,
+          "measurement": "udpStats",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT max(\"value\") *8 as \"Silver Max\", mean(\"value\") *8 as \"Silver Avg\", min(\"value\") *8 as \"Silver Min\"  FROM \"udpStats\" WHERE (\"port_id\" >= ${silver_portrange_min} AND \"port_id\" <= ${silver_portrange_max}) AND $timeFilter GROUP BY time(1s)",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "max"
+              },
+              {
+                "params": [
+                  "*8"
+                ],
+                "type": "math"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "port_id",
+              "operator": ">",
+              "value": "${portrange_min}"
+            },
+            {
+              "condition": "AND",
+              "key": "port_id",
+              "operator": "<",
+              "value": "${portrange_max}"
+            }
+          ]
+        },
+        {
+          "alias": "Silver Avg",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "C-6l5xDnk"
+          },
+          "groupBy": [
+            {
+              "params": [
+                "1s"
+              ],
+              "type": "time"
+            }
+          ],
+          "hide": true,
+          "measurement": "udpStats",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT mean(\"value\") *8 FROM \"udpStats\" WHERE (\"port_id\" >= ${silver_portrange_min} AND \"port_id\" <= ${silver_portrange_max}) AND $timeFilter GROUP BY time(1s)",
+          "rawQuery": true,
+          "refId": "G",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              },
+              {
+                "params": [
+                  "*8"
+                ],
+                "type": "math"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "port_id",
+              "operator": ">",
+              "value": "${portrange_min}"
+            },
+            {
+              "condition": "AND",
+              "key": "port_id",
+              "operator": "<",
+              "value": "${portrange_max}"
+            }
+          ]
+        },
+        {
+          "alias": "Silver Min",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "C-6l5xDnk"
+          },
+          "groupBy": [
+            {
+              "params": [
+                "1s"
+              ],
+              "type": "time"
+            }
+          ],
+          "hide": true,
+          "measurement": "udpStats",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT min(\"value\") *8 FROM \"udpStats\" WHERE (\"port_id\" >= ${silver_portrange_min} AND \"port_id\" <= ${silver_portrange_max}) AND $timeFilter GROUP BY time(1s)",
+          "rawQuery": true,
+          "refId": "F",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "min"
+              },
+              {
+                "params": [
+                  "*8"
+                ],
+                "type": "math"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "port_id",
+              "operator": ">",
+              "value": "${portrange_min}"
+            },
+            {
+              "condition": "AND",
+              "key": "port_id",
+              "operator": "<",
+              "value": "${portrange_max}"
+            }
+          ]
+        }
+      ],
+      "thresholds": [],
+      "timeRegions": [],
+      "title": "Avg/Min/Max throughput",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "transformations": [
+        {
+          "id": "renameByRegex",
+          "options": {
+            "regex": "(udpStats\\.)",
+            "renamePattern": ""
+          }
+        }
+      ],
+      "type": "graph",
+      "xaxis": {
+        "mode": "time",
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:144",
+          "format": "bps",
+          "label": "Mbps",
+          "logBase": 1,
+          "show": true
+        },
+        {
+          "$$hashKey": "object:145",
+          "format": "short",
+          "logBase": 1,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "fieldConfig": {
+        "defaults": {
+          "links": []
+        },
+        "overrides": []
+      },
+      "fill": 0,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 8,
+        "w": 10,
+        "x": 0,
+        "y": 10
+      },
+      "hiddenSeries": false,
+      "id": 52,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": false,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "8.3.2",
+      "pointradius": 2,
+      "points": true,
+      "renderer": "flot",
+      "seriesOverrides": [
+        {
+          "$$hashKey": "object:585",
+          "alias": "VQ L4S",
+          "color": "#73BF69"
+        },
+        {
+          "$$hashKey": "object:586",
+          "alias": "VQ Classic",
+          "color": "#FF9830"
+        }
+      ],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "alias": "L4S Drop",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "C-6l5xDnk"
+          },
+          "groupBy": [],
+          "hide": true,
+          "measurement": "ecn_drop_percent",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [
+                  "*100"
+                ],
+                "type": "math"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "flow_id",
+              "operator": "=",
+              "value": "0"
+            }
+          ]
+        },
+        {
+          "alias": "Classic Drop",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "C-6l5xDnk"
+          },
+          "groupBy": [],
+          "measurement": "ecn_drop_percent",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "B",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [
+                  " * 100"
+                ],
+                "type": "math"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "flow_id",
+              "operator": "=",
+              "value": "1"
+            }
+          ]
+        },
+        {
+          "alias": "L4S ECN",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "C-6l5xDnk"
+          },
+          "groupBy": [],
+          "hide": true,
+          "measurement": "ecn_drop_percent",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "C",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [
+                  "*100"
+                ],
+                "type": "math"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "flow_id",
+              "operator": "=",
+              "value": "2"
+            }
+          ]
+        }
+      ],
+      "thresholds": [],
+      "timeRegions": [],
+      "title": "Drop rate in AQM",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "mode": "time",
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:779",
+          "format": "short",
+          "label": "%",
+          "logBase": 1,
+          "min": "0",
+          "show": true
+        },
+        {
+          "$$hashKey": "object:780",
+          "format": "short",
+          "logBase": 1,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percentunit"
+        },
+        "overrides": []
+      },
+      "fill": 0,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 10,
+        "y": 10
+      },
+      "hiddenSeries": false,
+      "id": 54,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 2,
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "8.3.2",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "alias": "Cubic $tag_flow_id",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "C-6l5xDnk"
+          },
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT \"value\"  FROM \"lossCubic\" WHERE $timeFilter GROUP BY \"flow_id\"",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
+        },
+        {
+          "alias": "UDP $tag_flow_id",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "C-6l5xDnk"
+          },
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "flow_id"
+              ],
+              "type": "tag"
+            },
+            {
+              "params": [
+                "none"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "measurement": "loss_pp",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "E",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "loss"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "thresholds": [],
+      "timeRegions": [],
+      "title": "Loss Rate",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "transformations": [],
+      "type": "graph",
+      "xaxis": {
+        "mode": "time",
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "percentunit",
+          "logBase": 1,
+          "show": true
+        },
+        {
+          "format": "short",
+          "logBase": 1,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false
+      }
+    },
+    {
+      "fieldConfig": {
+        "defaults": {
+          "links": [],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "L4S TCP"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "green",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Classic"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "orange",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Des. TCP"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "purple",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Video"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "red",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/GC/"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "orange",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/6000/"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "green",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/6001/"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "orange",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/6002/"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "red",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/6003/"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "blue",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/udp_l4/"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-green",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/udp_cl/"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-orange",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 2,
+        "x": 22,
+        "y": 10
+      },
+      "id": 44,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "mean"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {},
+        "textMode": "auto"
+      },
+      "pluginVersion": "8.3.2",
+      "targets": [
+        {
+          "alias": "",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "C-6l5xDnk"
+          },
+          "groupBy": [
+            {
+              "params": [
+                "flow_id"
+              ],
+              "type": "tag"
+            }
+          ],
+          "measurement": "flownumPP",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT count(distinct \"port_id\") FROM \"udpStats\" WHERE (\"port_id\" >= ${gold_portrange_min} AND \"port_id\" <= ${gold_portrange_max}) AND \"value\">0 AND $timeFilter GROUP BY time(10s)",
+          "rawQuery": true,
+          "refId": "F",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "title": "Gold flows",
+      "transformations": [],
+      "type": "stat"
+    },
+    {
+      "fieldConfig": {
+        "defaults": {
+          "links": [],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "L4S TCP"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "green",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Classic"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "orange",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Des. TCP"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "purple",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Video"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "red",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/GC/"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "orange",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/6000/"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "green",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/6001/"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "orange",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/6002/"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "red",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/6003/"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "blue",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/udp_l4/"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-green",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/udp_cl/"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-orange",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 2,
+        "x": 22,
+        "y": 14
+      },
+      "id": 46,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "mean"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {},
+        "textMode": "auto"
+      },
+      "pluginVersion": "8.3.2",
+      "targets": [
+        {
+          "alias": "$tag_flow_id",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "C-6l5xDnk"
+          },
+          "groupBy": [
+            {
+              "params": [
+                "flow_id"
+              ],
+              "type": "tag"
+            }
+          ],
+          "measurement": "flownumPP",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT count(distinct \"port_id\")  FROM \"udpStats\" WHERE (\"port_id\" >= ${silver_portrange_min} AND \"port_id\" <= ${silver_portrange_max}) AND \"value\">0 AND $timeFilter GROUP BY time(10s)",
+          "rawQuery": true,
+          "refId": "F",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "title": "Silver flows",
+      "transformations": [],
+      "type": "stat"
+    },
+    {
+      "aliasColors": {
+        "Gold": "#ffd700",
+        "Silver": "#c0c0c0"
+      },
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "fieldConfig": {
+        "defaults": {
+          "links": []
+        },
+        "overrides": []
+      },
+      "fill": 0,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 18
+      },
+      "hiddenSeries": false,
+      "id": 38,
+      "legend": {
+        "alignAsTable": false,
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "rightSide": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 3,
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "8.3.2",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [
+        {
+          "$$hashKey": "object:53",
+          "alias": "/Gold/",
+          "color": "#ffd700"
+        },
+        {
+          "$$hashKey": "object:54",
+          "alias": "/Silver/",
+          "color": "#c0c0c0"
+        },
+        {
+          "$$hashKey": "object:67",
+          "alias": "/o_l4s/",
+          "color": "#96D98D",
+          "dashes": true
+        },
+        {
+          "$$hashKey": "object:102",
+          "alias": "/o_cl/",
+          "color": "#FFCB7D",
+          "dashes": true
+        }
+      ],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "alias": "$tag_flow_id",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "C-6l5xDnk"
+          },
+          "groupBy": [
+            {
+              "params": [
+                "flow_id"
+              ],
+              "type": "tag"
+            }
+          ],
+          "hide": true,
+          "measurement": "udpStats",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT \"value\" FROM \"timeseries_thr\" WHERE $timeFilter GROUP BY \"flow_id\"",
+          "rawQuery": false,
+          "refId": "D",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [
+                  " *8"
+                ],
+                "type": "math"
+              }
+            ]
+          ],
+          "tags": []
+        },
+        {
+          "alias": "Gold",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "C-6l5xDnk"
+          },
+          "groupBy": [
+            {
+              "params": [
+                "1s"
+              ],
+              "type": "time"
+            }
+          ],
+          "hide": false,
+          "measurement": "udpStats",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT sum(\"value\")  *8 FROM \"udpStats\" WHERE (\"port_id\" >= ${gold_portrange_min} AND \"port_id\" <= ${gold_portrange_max}) AND $timeFilter GROUP BY time(1s)",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "sum"
+              },
+              {
+                "params": [
+                  " *8"
+                ],
+                "type": "math"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "port_id",
+              "operator": ">",
+              "value": "${portrange_min}"
+            },
+            {
+              "condition": "AND",
+              "key": "port_id",
+              "operator": "<",
+              "value": "${portrange_max}"
+            }
+          ]
+        },
+        {
+          "alias": "Silver",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "C-6l5xDnk"
+          },
+          "groupBy": [
+            {
+              "params": [
+                "1s"
+              ],
+              "type": "time"
+            }
+          ],
+          "hide": false,
+          "measurement": "udpStats",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT sum(\"value\")  *8 FROM \"udpStats\" WHERE (\"port_id\" >= ${silver_portrange_min} AND \"port_id\" <= ${silver_portrange_max}) AND $timeFilter GROUP BY time(1s)",
+          "rawQuery": true,
+          "refId": "B",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "sum"
+              },
+              {
+                "params": [
+                  " *8"
+                ],
+                "type": "math"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "port_id",
+              "operator": ">",
+              "value": "${portrange_min}"
+            },
+            {
+              "condition": "AND",
+              "key": "port_id",
+              "operator": "<",
+              "value": "${portrange_max}"
+            }
+          ]
+        }
+      ],
+      "thresholds": [],
+      "timeRegions": [],
+      "title": "Total throughput",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "mode": "time",
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:144",
+          "format": "bps",
+          "label": "Mbps",
+          "logBase": 1,
+          "show": true
+        },
+        {
+          "$$hashKey": "object:145",
+          "format": "short",
+          "logBase": 1,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "fieldConfig": {
+        "defaults": {
+          "links": []
+        },
+        "overrides": []
+      },
+      "fill": 0,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 18
+      },
+      "hiddenSeries": false,
+      "id": 56,
+      "legend": {
+        "alignAsTable": false,
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "rightSide": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 3,
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "8.3.2",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [
+        {
+          "$$hashKey": "object:53",
+          "alias": "/l4s/",
+          "color": "#73BF69",
+          "legend": false,
+          "lines": false
+        },
+        {
+          "$$hashKey": "object:54",
+          "alias": "/cl/",
+          "color": "#FF9830"
+        },
+        {
+          "$$hashKey": "object:67",
+          "alias": "/o_l4s/",
+          "color": "#96D98D",
+          "legend": false,
+          "lines": false
+        },
+        {
+          "$$hashKey": "object:102",
+          "alias": "/o_cl/",
+          "color": "#FFCB7D",
+          "dashes": true
+        }
+      ],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "alias": "$tag_flow_id",
+          "groupBy": [
+            {
+              "params": [
+                "flow_id"
+              ],
+              "type": "tag"
+            }
+          ],
+          "hide": false,
+          "measurement": "in_cl_l4s",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT \"value\" FROM \"timeseries_thr\" WHERE $timeFilter GROUP BY \"flow_id\"",
+          "rawQuery": false,
+          "refId": "D",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [
+                  "*8"
+                ],
+                "type": "math"
+              }
+            ]
+          ],
+          "tags": []
+        },
+        {
+          "alias": "o_$tag_flow_id",
+          "groupBy": [
+            {
+              "params": [
+                "flow_id"
+              ],
+              "type": "tag"
+            }
+          ],
+          "hide": false,
+          "measurement": "out_cl_l4s",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT \"value\" FROM \"timeseries_thr\" WHERE $timeFilter GROUP BY \"flow_id\"",
+          "rawQuery": false,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [
+                  "*8"
+                ],
+                "type": "math"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "thresholds": [],
+      "timeRegions": [],
+      "title": "In/Out Thr ",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "mode": "time",
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:144",
+          "format": "bps",
+          "label": "Mbps",
+          "logBase": 1,
+          "min": "0",
+          "show": true
+        },
+        {
+          "$$hashKey": "object:145",
+          "format": "short",
+          "logBase": 1,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "fieldConfig": {
+        "defaults": {
+          "links": []
+        },
+        "overrides": []
+      },
+      "fill": 0,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 6,
+        "w": 12,
+        "x": 0,
+        "y": 26
+      },
+      "hiddenSeries": false,
+      "id": 48,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "8.3.2",
+      "pointradius": 2,
+      "points": true,
+      "renderer": "flot",
+      "seriesOverrides": [
+        {
+          "alias": "CTV L4S",
+          "color": "#73BF69"
+        },
+        {
+          "alias": "CTV Classic",
+          "color": "#FF9830"
+        },
+        {
+          "alias": "CTV Classic (max)",
+          "color": "#FF9830",
+          "dashes": true,
+          "linewidth": 3,
+          "points": false
+        },
+        {
+          "alias": "CTV L4S (max)",
+          "color": "#73BF69",
+          "dashes": true,
+          "linewidth": 3,
+          "points": false
+        },
+        {
+          "alias": "CTV L4S (min)",
+          "color": "#73BF69",
+          "dashLength": 5,
+          "dashes": true,
+          "points": false
+        },
+        {
+          "alias": "CTV Classic (min)",
+          "color": "#FF9830",
+          "dashLength": 5,
+          "dashes": true,
+          "points": false
+        }
+      ],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "alias": "CTV L4S (max)",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "C-6l5xDnk"
+          },
+          "groupBy": [
+            {
+              "params": [
+                "flow_id"
+              ],
+              "type": "tag"
+            }
+          ],
+          "hide": true,
+          "measurement": "max_ctv",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "B",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "flow_id",
+              "operator": "=",
+              "value": "0"
+            }
+          ]
+        },
+        {
+          "alias": "CTV Classic (max)",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "C-6l5xDnk"
+          },
+          "groupBy": [
+            {
+              "params": [
+                "flow_id"
+              ],
+              "type": "tag"
+            }
+          ],
+          "measurement": "max_ctv",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "C",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "flow_id",
+              "operator": "=",
+              "value": "1"
+            }
+          ]
+        },
+        {
+          "alias": "CTV Classic",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "C-6l5xDnk"
+          },
+          "groupBy": [
+            {
+              "params": [
+                "flow_id"
+              ],
+              "type": "tag"
+            }
+          ],
+          "hide": true,
+          "measurement": "ctv",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "flow_id",
+              "operator": "=",
+              "value": "1"
+            }
+          ]
+        },
+        {
+          "alias": "CTV L4S",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "C-6l5xDnk"
+          },
+          "groupBy": [
+            {
+              "params": [
+                "flow_id"
+              ],
+              "type": "tag"
+            }
+          ],
+          "hide": true,
+          "measurement": "ctv",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "D",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "flow_id",
+              "operator": "=",
+              "value": "0"
+            }
+          ]
+        },
+        {
+          "alias": "CTV L4S (min)",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "C-6l5xDnk"
+          },
+          "groupBy": [
+            {
+              "params": [
+                "flow_id"
+              ],
+              "type": "tag"
+            }
+          ],
+          "hide": true,
+          "measurement": "min_ctv",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "E",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "flow_id",
+              "operator": "=",
+              "value": "0"
+            }
+          ]
+        },
+        {
+          "alias": "CTV Classic (min)",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "C-6l5xDnk"
+          },
+          "groupBy": [
+            {
+              "params": [
+                "flow_id"
+              ],
+              "type": "tag"
+            }
+          ],
+          "measurement": "min_ctv",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "F",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "flow_id",
+              "operator": "=",
+              "value": "1"
+            }
+          ]
+        }
+      ],
+      "thresholds": [],
+      "timeRegions": [],
+      "title": "CTV",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "mode": "time",
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "short",
+          "logBase": 1,
+          "show": true
+        },
+        {
+          "format": "short",
+          "logBase": 1,
+          "show": false
+        }
+      ],
+      "yaxis": {
+        "align": false
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "fieldConfig": {
+        "defaults": {
+          "links": []
+        },
+        "overrides": []
+      },
+      "fill": 0,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 12,
+        "y": 26
+      },
+      "hiddenSeries": false,
+      "id": 50,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": false,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "8.3.2",
+      "pointradius": 2,
+      "points": true,
+      "renderer": "flot",
+      "seriesOverrides": [
+        {
+          "alias": "VQ L4S",
+          "color": "#73BF69"
+        },
+        {
+          "alias": "VQ Classic",
+          "color": "#FF9830"
+        }
+      ],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "alias": "pkt_delay_$tag_flow_id",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "C-6l5xDnk"
+          },
+          "groupBy": [
+            {
+              "params": [
+                "flow_id"
+              ],
+              "type": "tag"
+            }
+          ],
+          "hide": false,
+          "measurement": "pkt_delay",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "C",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "flow_id",
+              "operator": "=",
+              "value": "cl"
+            }
+          ]
+        },
+        {
+          "alias": "$tag_flow_id",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "C-6l5xDnk"
+          },
+          "groupBy": [
+            {
+              "params": [
+                "flow_id"
+              ],
+              "type": "tag"
+            }
+          ],
+          "hide": true,
+          "measurement": "latency",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "D",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [
+                  "*1000"
+                ],
+                "type": "math"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "thresholds": [],
+      "timeRegions": [],
+      "title": "Physical qlen",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "mode": "time",
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "short",
+          "label": "ms",
+          "logBase": 1,
+          "show": true
+        },
+        {
+          "format": "short",
+          "logBase": 1,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "fieldConfig": {
+        "defaults": {
+          "links": []
+        },
+        "overrides": []
+      },
+      "fill": 0,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 6,
+        "w": 10,
+        "x": 0,
+        "y": 32
+      },
+      "hiddenSeries": false,
+      "id": 9,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "8.3.2",
+      "pointradius": 2,
+      "points": true,
+      "renderer": "flot",
+      "seriesOverrides": [
+        {
+          "$$hashKey": "object:85",
+          "alias": "Classic",
+          "color": "#FF9830"
+        },
+        {
+          "$$hashKey": "object:86",
+          "alias": "L4S",
+          "color": "#73BF69"
+        }
+      ],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "alias": "$tag_type",
+          "groupBy": [
+            {
+              "params": [
+                "type"
+              ],
+              "type": "tag"
+            }
+          ],
+          "hide": false,
+          "measurement": "ping",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "C",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "ms"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [
+                  "-0"
+                ],
+                "type": "math"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "thresholds": [],
+      "timeRegions": [],
+      "title": "Ping delay",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "mode": "time",
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:99",
+          "format": "short",
+          "label": "ms",
+          "logBase": 1,
+          "show": true
+        },
+        {
+          "$$hashKey": "object:100",
+          "format": "short",
+          "logBase": 1,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false
+      }
+    }
+  ],
+  "refresh": "5s",
+  "schemaVersion": 33,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": [
+      {
+        "current": {
+          "selected": true,
+          "text": "20000",
+          "value": "20000"
+        },
+        "hide": 0,
+        "label": "Gold portrange min",
+        "name": "gold_portrange_min",
+        "options": [
+          {
+            "selected": true,
+            "text": "20000",
+            "value": "20000"
+          }
+        ],
+        "query": "20000",
+        "skipUrlSync": false,
+        "type": "textbox"
+      },
+      {
+        "current": {
+          "selected": true,
+          "text": "21999",
+          "value": "21999"
+        },
+        "hide": 0,
+        "label": "Gold portrange max",
+        "name": "gold_portrange_max",
+        "options": [
+          {
+            "selected": true,
+            "text": "21999",
+            "value": "21999"
+          }
+        ],
+        "query": "21999",
+        "skipUrlSync": false,
+        "type": "textbox"
+      },
+      {
+        "current": {
+          "selected": true,
+          "text": "22000",
+          "value": "22000"
+        },
+        "hide": 0,
+        "label": "Silver portrange min",
+        "name": "silver_portrange_min",
+        "options": [
+          {
+            "selected": true,
+            "text": "22000",
+            "value": "22000"
+          }
+        ],
+        "query": "22000",
+        "skipUrlSync": false,
+        "type": "textbox"
+      },
+      {
+        "current": {
+          "selected": true,
+          "text": "29999",
+          "value": "29999"
+        },
+        "hide": 0,
+        "label": "Silver portrange max",
+        "name": "silver_portrange_max",
+        "options": [
+          {
+            "selected": true,
+            "text": "29999",
+            "value": "29999"
+          }
+        ],
+        "query": "29999",
+        "skipUrlSync": false,
+        "type": "textbox"
+      },
+      {
+        "current": {
+          "selected": true,
+          "text": "10",
+          "value": "10"
+        },
+        "hide": 0,
+        "label": "Flow count",
+        "name": "flowcount",
+        "options": [
+          {
+            "selected": true,
+            "text": "10",
+            "value": "10"
+          }
+        ],
+        "query": "10",
+        "skipUrlSync": false,
+        "type": "textbox"
+      }
+    ]
+  },
+  "time": {
+    "from": "now-12s",
+    "to": "now-2s"
+  },
+  "timepicker": {},
+  "timezone": "",
+  "title": "Desire6g",
+  "uid": "FYk0tjXnk",
+  "version": 4,
+  "weekStart": ""
+}
