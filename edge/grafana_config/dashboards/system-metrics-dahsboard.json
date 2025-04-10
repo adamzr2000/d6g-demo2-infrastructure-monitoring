@@ -843,7 +843,7 @@
         ]
       },
       "gridPos": {
-        "h": 9,
+        "h": 10,
         "w": 12,
         "x": 0,
         "y": 8
@@ -1014,7 +1014,7 @@
         ]
       },
       "gridPos": {
-        "h": 9,
+        "h": 10,
         "w": 12,
         "x": 12,
         "y": 8
@@ -1053,75 +1053,12 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 17
+        "y": 18
       },
       "id": 6,
       "panels": [],
       "title": "Ping Metrics",
       "type": "row"
-    },
-    {
-      "datasource": {
-        "type": "influxdb",
-        "uid": "P951FEA4DE68E13C5"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "fieldMinMax": false,
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "semi-dark-red",
-                "value": null
-              }
-            ]
-          },
-          "unit": "percent"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 24,
-        "x": 0,
-        "y": 18
-      },
-      "id": 5,
-      "options": {
-        "colorMode": "background",
-        "graphMode": "area",
-        "justifyMode": "center",
-        "orientation": "vertical",
-        "percentChangeColorMode": "standard",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showPercentChange": false,
-        "textMode": "value_and_name",
-        "wideLayout": true
-      },
-      "pluginVersion": "11.5.2",
-      "targets": [
-        {
-          "datasource": {
-            "type": "influxdb",
-            "uid": "P951FEA4DE68E13C5"
-          },
-          "query": "from(bucket: \"infrastructure-monitoring\")\n  |> range(start: -15m)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"ping_metrics\")\n  |> filter(fn: (r) => r[\"_field\"] == \"packet_loss_percent\")\n  |> map(fn: (r) => ({ r with combined_label: r.target_name + \" (\" + r.target_ip + \")\" }))\n  |> keep(columns: [\"_time\", \"_value\", \"combined_label\"]) // Keep only necessary fields\n  |> group(columns: [\"combined_label\"]) // Group by target_name + IP\n",
-          "refId": "A"
-        }
-      ],
-      "title": "Packet Loss (%)",
-      "type": "stat"
     },
     {
       "datasource": {
@@ -1193,10 +1130,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 14,
-        "w": 24,
+        "h": 23,
+        "w": 15,
         "x": 0,
-        "y": 22
+        "y": 19
       },
       "id": 3,
       "options": {
@@ -1229,6 +1166,69 @@
       ],
       "title": "RTT Latency (ms)",
       "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "P951FEA4DE68E13C5"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "fieldMinMax": false,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "semi-dark-red",
+                "value": null
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 9,
+        "x": 15,
+        "y": 19
+      },
+      "id": 5,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "center",
+        "orientation": "vertical",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "value_and_name",
+        "wideLayout": true
+      },
+      "pluginVersion": "11.5.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "P951FEA4DE68E13C5"
+          },
+          "query": "from(bucket: \"infrastructure-monitoring\")\n  |> range(start: -15m)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"ping_metrics\")\n  |> filter(fn: (r) => r[\"_field\"] == \"packet_loss_percent\")\n  |> map(fn: (r) => ({ r with combined_label: r.target_name + \" (\" + r.target_ip + \")\" }))\n  |> keep(columns: [\"_time\", \"_value\", \"combined_label\"]) // Keep only necessary fields\n  |> group(columns: [\"combined_label\"]) // Group by target_name + IP\n",
+          "refId": "A"
+        }
+      ],
+      "title": "Packet Loss (%)",
+      "type": "stat"
     },
     {
       "datasource": {
@@ -1265,10 +1265,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 6,
-        "w": 24,
-        "x": 0,
-        "y": 36
+        "h": 14,
+        "w": 9,
+        "x": 15,
+        "y": 28
       },
       "id": 9,
       "options": {
@@ -1401,7 +1401,7 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 10,
+        "h": 12,
         "w": 12,
         "x": 0,
         "y": 43
@@ -1504,7 +1504,7 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 10,
+        "h": 12,
         "w": 12,
         "x": 12,
         "y": 43
@@ -1607,10 +1607,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 10,
-        "w": 24,
+        "h": 14,
+        "w": 16,
         "x": 0,
-        "y": 53
+        "y": 55
       },
       "id": 28,
       "options": {
@@ -1676,6 +1676,6 @@
   "timezone": "browser",
   "title": "D6G Site - System Metrics",
   "uid": "aefbgeu9q2dq8f",
-  "version": 2,
+  "version": 1,
   "weekStart": ""
 }

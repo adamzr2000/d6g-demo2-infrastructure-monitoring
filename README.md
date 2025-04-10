@@ -27,8 +27,14 @@ cd edge
 
 ---
 
-![grafana1](./grafana-dashboard1.png)
-![grafana2](./grafana-dashboard2.png)
+### Grafana credentials
+
+- User: `desire6g`
+- Password: `desire6g2024;`
+
+![grafana-system](./grafana-system-metrics.png)
+![grafana-ping](./grafana-ping-metrics.png)
+![grafana-docker](./grafana-docker-metrics.png)
 
 ---
 
