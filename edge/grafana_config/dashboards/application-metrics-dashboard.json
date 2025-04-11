@@ -42,6 +42,440 @@
         "x": 0,
         "y": 0
       },
+      "id": 9,
+      "panels": [],
+      "title": "ROS Metrics",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "P951FEA4DE68E13C5"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "opacity",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineStyle": {
+              "fill": "solid"
+            },
+            "lineWidth": 2,
+            "pointSize": 1,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "ms"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Joint States"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "green",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Laser Scan"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "red",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Odometry"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "yellow",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 15,
+        "w": 12,
+        "x": 0,
+        "y": 1
+      },
+      "id": 2,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "maxHeight": 600,
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "11.5.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "yBmilKUIz"
+          },
+          "query": "from(bucket: \"infrastructure-monitoring\")\n  |> range(start: -5m)\n  |> filter(fn: (r) => \n    r._measurement == \"ros_metrics\" and\n    r._field == \"average_delay_ms\" and\n    r.metric_type == \"delay\" and\n    contains(value: r.topic, set: [\n      \"/scan\",\n      \"/joint_states\",\n      \"/go1_controller/odom\",\n      \"/go1_controller/cmd_vel\"\n    ])\n  )\n  |> map(fn: (r) => ({\n    r with\n    topic_name: \n      if r.topic == \"/scan\" then \"Laser Scan\" \n      else if r.topic == \"/joint_states\" then \"Joint States\" \n      else if r.topic == \"/go1_controller/odom\" then \"Odometry\" \n      else if r.topic == \"/go1_controller/cmd_vel\" then \"Control\" \n      else r.topic\n  }))\n  |> group(columns: [\"topic_name\"])\n  |> keep(columns: [\"_time\", \"_value\", \"topic_name\"])\n",
+          "refId": "A"
+        }
+      ],
+      "title": "Average Delay",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "P951FEA4DE68E13C5"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "opacity",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineStyle": {
+              "fill": "solid"
+            },
+            "lineWidth": 2,
+            "pointSize": 1,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "Kbits"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Control"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "blue",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Joint States"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "green",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Laser Scan"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "red",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Odometry"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "yellow",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 15,
+        "w": 12,
+        "x": 12,
+        "y": 1
+      },
+      "id": 1,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "maxHeight": 600,
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "11.5.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "yBmilKUIz"
+          },
+          "query": "from(bucket: \"infrastructure-monitoring\")\n  |> range(start: -5m)\n  |> filter(fn: (r) => \n    r._measurement == \"ros_metrics\" and\n    r._field == \"average_bandwidth_kbps\" and\n    r.metric_type == \"bandwidth\" and\n    contains(value: r.topic, set: [\n      \"/scan\",\n      \"/joint_states\",\n      \"/go1_controller/odom\",\n      \"/go1_controller/cmd_vel\"\n    ])\n  )\n  |> map(fn: (r) => ({\n    r with\n    topic_name: \n      if r.topic == \"/scan\" then \"Laser Scan\" \n      else if r.topic == \"/joint_states\" then \"Joint States\" \n      else if r.topic == \"/go1_controller/odom\" then \"Odometry\" \n      else if r.topic == \"/go1_controller/cmd_vel\" then \"Control\" \n      else r.topic\n  }))\n  |> group(columns: [\"topic_name\"])\n  |> keep(columns: [\"_time\", \"_value\", \"topic_name\"])\n",
+          "refId": "A"
+        }
+      ],
+      "title": "Average Bandwidth",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "P951FEA4DE68E13C5"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "orange",
+                "value": null
+              }
+            ]
+          },
+          "unit": "ms"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 12,
+        "x": 0,
+        "y": 16
+      },
+      "id": 3,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "center",
+        "orientation": "vertical",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "value_and_name",
+        "wideLayout": true
+      },
+      "pluginVersion": "11.5.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "yBmilKUIz"
+          },
+          "query": "from(bucket: \"infrastructure-monitoring\")\n  |> range(start: -5m)\n  |> filter(fn: (r) =>\n    r._measurement == \"ros_metrics\" and\n    r._field == \"jitter_ms\" and\n    r.metric_type == \"jitter\" and\n    contains(value: r.topic, set: [\n      \"/scan\",\n      \"/joint_states\",\n      \"/go1_controller/odom\",\n      \"/go1_controller/cmd_vel\"\n    ])\n  )\n  |> group(columns: [\"topic\"])\n  |> sort(columns: [\"_time\"], desc: true)\n  |> unique(column: \"topic\")  // Gets latest value per topic\n  |> map(fn: (r) => ({\n    r with\n    topic_name:\n      if r.topic == \"/scan\" then \"Laser Scan\"\n      else if r.topic == \"/joint_states\" then \"Joint States\"\n      else if r.topic == \"/go1_controller/odom\" then \"Odometry\"\n      else if r.topic == \"/go1_controller/cmd_vel\" then \"Control\"\n      else r.topic\n  }))\n  |> group(columns: [\"topic_name\"])\n  |> keep(columns: [\"_time\", \"_value\", \"topic_name\"])\n",
+          "refId": "A"
+        }
+      ],
+      "title": "Average Jitter",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "P951FEA4DE68E13C5"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "blue",
+                "value": null
+              }
+            ]
+          },
+          "unit": "bytes"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 12,
+        "x": 12,
+        "y": 16
+      },
+      "id": 7,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "center",
+        "orientation": "vertical",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "value_and_name",
+        "wideLayout": true
+      },
+      "pluginVersion": "11.5.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "yBmilKUIz"
+          },
+          "query": "from(bucket: \"infrastructure-monitoring\")\n  |> range(start: -5m)\n  |> filter(fn: (r) =>\n    r._measurement == \"ros_metrics\" and\n    r._field == \"average_message_size_bytes\" and\n    r.metric_type == \"bandwidth\" and\n    contains(value: r.topic, set: [\n      \"/scan\",\n      \"/joint_states\",\n      \"/go1_controller/odom\",\n      \"/go1_controller/cmd_vel\"\n    ])\n  )\n  |> group(columns: [\"topic\"])\n  |> sort(columns: [\"_time\"], desc: true)\n  |> unique(column: \"topic\")  // Get the latest value for each topic\n  |> map(fn: (r) => ({\n    r with\n    topic_name:\n      if r.topic == \"/scan\" then \"Laser Scan\"\n      else if r.topic == \"/joint_states\" then \"Joint States\"\n      else if r.topic == \"/go1_controller/odom\" then \"Odometry\"\n      else if r.topic == \"/go1_controller/cmd_vel\" then \"Control\"\n      else r.topic\n  }))\n  |> group(columns: [\"topic_name\"])\n  |> keep(columns: [\"_time\", \"_value\", \"topic_name\"])\n",
+          "refId": "A"
+        }
+      ],
+      "title": "Average Message Size",
+      "type": "stat"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 21
+      },
       "id": 11,
       "panels": [],
       "title": "Video Streaming App Metrics",
@@ -112,7 +546,7 @@
         "h": 14,
         "w": 12,
         "x": 0,
-        "y": 1
+        "y": 22
       },
       "id": 10,
       "options": {
@@ -207,7 +641,7 @@
         "h": 14,
         "w": 12,
         "x": 12,
-        "y": 1
+        "y": 22
       },
       "id": 12,
       "options": {

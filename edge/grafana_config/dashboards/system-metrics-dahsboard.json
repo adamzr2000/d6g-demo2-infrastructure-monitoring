@@ -281,8 +281,8 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 6,
-        "w": 4,
+        "h": 3,
+        "w": 3,
         "x": 12,
         "y": 1
       },
@@ -337,8 +337,8 @@
       },
       "gridPos": {
         "h": 3,
-        "w": 4,
-        "x": 16,
+        "w": 3,
+        "x": 15,
         "y": 1
       },
       "id": 22,
@@ -364,7 +364,7 @@
           "refId": "A"
         }
       ],
-      "title": "CPU logical cores",
+      "title": "CPU cores",
       "type": "stat"
     },
     {
@@ -381,7 +381,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "text",
+                "color": "green",
                 "value": null
               }
             ]
@@ -393,10 +393,10 @@
       "gridPos": {
         "h": 3,
         "w": 4,
-        "x": 20,
+        "x": 18,
         "y": 1
       },
-      "id": 8,
+      "id": 29,
       "options": {
         "colorMode": "value",
         "graphMode": "none",
@@ -417,11 +417,11 @@
       "pluginVersion": "11.5.2",
       "targets": [
         {
-          "query": "from(bucket: \"infrastructure-monitoring\")\n  |> range(start: -15m)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"system_metrics\")\n  |> filter(fn: (r) => r[\"_field\"] == \"ram_total_bytes\")\n  |> keep(columns: [\"_time\", \"_field\", \"_value\"]) ",
+          "query": "from(bucket: \"infrastructure-monitoring\")\n  |> range(start: -15m)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"system_metrics\")\n  |> filter(fn: (r) => r[\"_field\"] == \"ram_reclaimable_bytes\")\n  |> keep(columns: [\"_time\", \"_field\", \"_value\"]) ",
           "refId": "A"
         }
       ],
-      "title": "RAM Total",
+      "title": "RAM Cache + Buffer",
       "type": "stat"
     },
     {
@@ -450,8 +450,8 @@
       },
       "gridPos": {
         "h": 3,
-        "w": 4,
-        "x": 16,
+        "w": 3,
+        "x": 12,
         "y": 4
       },
       "id": 25,
@@ -505,8 +505,65 @@
       },
       "gridPos": {
         "h": 3,
+        "w": 3,
+        "x": 15,
+        "y": 4
+      },
+      "id": 8,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "11.5.2",
+      "targets": [
+        {
+          "query": "from(bucket: \"infrastructure-monitoring\")\n  |> range(start: -15m)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"system_metrics\")\n  |> filter(fn: (r) => r[\"_field\"] == \"ram_total_bytes\")\n  |> keep(columns: [\"_time\", \"_field\", \"_value\"]) ",
+          "refId": "A"
+        }
+      ],
+      "title": "RAM Total",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "uid": "P951FEA4DE68E13C5"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "red",
+                "value": null
+              }
+            ]
+          },
+          "unit": "bytes"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
         "w": 2,
-        "x": 20,
+        "x": 18,
         "y": 4
       },
       "id": 17,
@@ -551,7 +608,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "text",
+                "color": "green",
                 "value": null
               }
             ]
@@ -563,7 +620,7 @@
       "gridPos": {
         "h": 3,
         "w": 2,
-        "x": 22,
+        "x": 20,
         "y": 4
       },
       "id": 18,
@@ -1130,8 +1187,8 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 23,
-        "w": 15,
+        "h": 18,
+        "w": 16,
         "x": 0,
         "y": 19
       },
@@ -1193,9 +1250,9 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 9,
-        "w": 9,
-        "x": 15,
+        "h": 8,
+        "w": 8,
+        "x": 16,
         "y": 19
       },
       "id": 5,
@@ -1203,7 +1260,7 @@
         "colorMode": "background",
         "graphMode": "area",
         "justifyMode": "center",
-        "orientation": "vertical",
+        "orientation": "auto",
         "percentChangeColorMode": "standard",
         "reduceOptions": {
           "calcs": [
@@ -1265,10 +1322,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 14,
-        "w": 9,
-        "x": 15,
-        "y": 28
+        "h": 10,
+        "w": 8,
+        "x": 16,
+        "y": 27
       },
       "id": 9,
       "options": {
@@ -1324,7 +1381,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 42
+        "y": 37
       },
       "id": 24,
       "panels": [],
@@ -1404,7 +1461,7 @@
         "h": 12,
         "w": 12,
         "x": 0,
-        "y": 43
+        "y": 38
       },
       "id": 26,
       "options": {
@@ -1507,7 +1564,7 @@
         "h": 12,
         "w": 12,
         "x": 12,
-        "y": 43
+        "y": 38
       },
       "id": 27,
       "options": {
@@ -1608,9 +1665,9 @@
       },
       "gridPos": {
         "h": 14,
-        "w": 16,
+        "w": 19,
         "x": 0,
-        "y": 55
+        "y": 50
       },
       "id": 28,
       "options": {
